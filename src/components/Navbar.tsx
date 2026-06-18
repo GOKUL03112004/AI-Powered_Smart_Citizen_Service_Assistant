@@ -8,7 +8,9 @@ import {
   Shield,
   Menu,
   X,
+  LogOut,
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 interface NavbarProps {
   currentPage: AppPage;
@@ -24,6 +26,12 @@ const navItems: { page: AppPage; label: string; icon: React.ElementType }[] = [
 
 export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const { isAuthenticated, username, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    onNavigate('login');
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-gov-navy shadow-nav">
@@ -63,6 +71,29 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
                 {label}
               </button>
             ))}
+            
+            {/* Auth section */}
+            <div className="ml-4 pl-4 border-l border-white/20 flex items-center gap-2">
+              {isAuthenticated ? (
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="text-blue-200">Hi, {username}</span>
+                  <button 
+                    onClick={handleLogout}
+                    className="flex items-center gap-1 px-3 py-1.5 rounded bg-white/5 text-blue-200 hover:bg-white/10 hover:text-white transition-colors"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => onNavigate('login')}
+                  className="px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-500 transition-colors"
+                >
+                  Sign In
+                </button>
+              )}
+            </div>
           </nav>
 
           {/* Mobile menu button */}

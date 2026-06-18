@@ -6,7 +6,7 @@ import operator
 
 from langgraph.graph import StateGraph, END
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 
 from rag.vector_store import VectorStoreManager
 from config import get_settings

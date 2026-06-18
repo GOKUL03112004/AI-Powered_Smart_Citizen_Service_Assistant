@@ -7,7 +7,7 @@ import chromadb
 from chromadb.config import Settings as ChromaSettings
 from langchain_chroma import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 from config import get_settings
 
@@ -28,7 +28,7 @@ class VectorStoreManager:
             return
         settings = get_settings()
         self._embeddings = GoogleGenerativeAIEmbeddings(
-            model="models/embedding-001",
+            model="models/gemini-embedding-2",
             google_api_key=settings.google_api_key,
         )
         db_path = Path(settings.chroma_db_path)

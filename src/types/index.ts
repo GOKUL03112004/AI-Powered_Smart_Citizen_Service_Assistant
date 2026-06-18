@@ -43,4 +43,4 @@ export interface UploadResult {
   success: boolean;
 }
 
-export type AppPage = 'home' | 'chat' | 'eligibility' | 'simplify';
+export type AppPage = 'home' | 'chat' | 'eligibility' | 'simplify' | 'login' | 'register';

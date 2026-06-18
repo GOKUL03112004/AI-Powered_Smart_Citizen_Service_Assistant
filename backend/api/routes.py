@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, status
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
 from fastapi.responses import JSONResponse
 
 from api.schemas import (
@@ -19,6 +19,8 @@ from services.eligibility_service import EligibilityService
 from services.simplifier_service import SimplifierService
 from rag.vector_store import VectorStoreManager
 from rag.document_loader import DocumentLoader
+from api.auth import get_current_user
+import models
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -29,14 +31,14 @@ _simplifier_service = SimplifierService()
 
 
 @router.post("/chat", response_model=ChatResponse, summary="Citizen chat assistant")
-async def chat(request: ChatRequest) -> ChatResponse:
+async def chat(request: ChatRequest, current_user: models.User = Depends(get_current_user)) -> ChatResponse:
     """Process a citizen's question using the LangGraph ReAct workflow."""
     result = await _chat_service.process(request.query)
     return ChatResponse(**result)
 
 
 @router.post("/eligibility", response_model=EligibilityResponse, summary="Check scheme eligibility")
-async def check_eligibility(request: EligibilityRequest) -> EligibilityResponse:
+async def check_eligibility(request: EligibilityRequest, current_user: models.User = Depends(get_current_user)) -> EligibilityResponse:
     """Determine eligible government schemes based on citizen profile."""
     result = await _eligibility_service.check_eligibility(
         age=request.age,
@@ -47,7 +49,7 @@ async def check_eligibility(request: EligibilityRequest) -> EligibilityResponse:
 
 
 @router.post("/simplify-policy", response_model=SimplifyResponse, summary="Simplify policy text")
-async def simplify_policy(request: SimplifyRequest) -> SimplifyResponse:
+async def simplify_policy(request: SimplifyRequest, current_user: models.User = Depends(get_current_user)) -> SimplifyResponse:
     """Convert complex government policy language into citizen-friendly text."""
     result = await _simplifier_service.simplify(request.policy_text)
     return SimplifyResponse(**result)
@@ -58,7 +60,7 @@ async def simplify_policy(request: SimplifyRequest) -> SimplifyResponse:
     response_model=UploadDocumentResponse,
     summary="Upload document to knowledge base",
 )
-async def upload_document(file: UploadFile = File(...)) -> UploadDocumentResponse:
+async def upload_document(file: UploadFile = File(...), current_user: models.User = Depends(get_current_user)) -> UploadDocumentResponse:
     """Upload a text document to the ChromaDB knowledge base."""
     if not file.filename:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No filename provided")

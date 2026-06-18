@@ -10,8 +10,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from config import get_settings
 from api.routes import router
+from api.auth_routes import router as auth_router
 from rag.vector_store import VectorStoreManager
 from rag.document_loader import DocumentLoader
+import models
+from database import engine
+
+models.Base.metadata.create_all(bind=engine)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,7 +24,6 @@ logging.basicConfig(
     stream=sys.stdout,
 )
 logger = logging.getLogger(__name__)
-
 
 def _seed_knowledge_base() -> None:
     """Load built-in documents into ChromaDB if the collection is empty."""
@@ -63,6 +67,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])
     app.include_router(router, prefix="/api/v1")
 
     @app.get("/")

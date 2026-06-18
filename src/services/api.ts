@@ -3,10 +3,18 @@ import type { EligibilityResult, SimplifyResult, UploadResult } from '../types';
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: BASE_URL,
   timeout: 120000,
   headers: { 'Content-Type': 'application/json' },
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 api.interceptors.response.use(

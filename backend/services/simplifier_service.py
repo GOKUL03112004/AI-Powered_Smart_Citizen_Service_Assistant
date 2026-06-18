@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.schema import HumanMessage
+from langchain_core.messages import HumanMessage
 
 from config import get_settings
 
