@@ -16,7 +16,7 @@ class SimplifierService:
     def _get_llm(self, temperature: float = 0.3) -> ChatGoogleGenerativeAI:
         settings = get_settings()
         return ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
+            model="gemini-1.5-flash",
             google_api_key=settings.google_api_key,
             temperature=temperature,
         )
