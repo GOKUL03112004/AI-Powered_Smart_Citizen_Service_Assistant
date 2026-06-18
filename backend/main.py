@@ -1,0 +1,79 @@
+from __future__ import annotations
+
+import logging
+import sys
+from contextlib import asynccontextmanager
+from pathlib import Path
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from config import get_settings
+from api.routes import router
+from rag.vector_store import VectorStoreManager
+from rag.document_loader import DocumentLoader
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+    stream=sys.stdout,
+)
+logger = logging.getLogger(__name__)
+
+
+def _seed_knowledge_base() -> None:
+    """Load built-in documents into ChromaDB if the collection is empty."""
+    vs = VectorStoreManager()
+    if vs.collection_count() > 0:
+        logger.info("Knowledge base already seeded (%d chunks)", vs.collection_count())
+        return
+
+    data_dir = Path(__file__).parent / "data"
+    loader = DocumentLoader(str(data_dir))
+    docs = loader.load_all()
+    if docs:
+        vs.add_documents(docs)
+        logger.info("Seeded knowledge base with %d document chunks", len(docs))
+    else:
+        logger.warning("No documents found in %s", data_dir)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info("Starting up Citizen Service API...")
+    _seed_knowledge_base()
+    yield
+    logger.info("Shutting down Citizen Service API")
+
+
+def create_app() -> FastAPI:
+    settings = get_settings()
+    app = FastAPI(
+        title="AI-Powered Smart Citizen Service Assistant",
+        description="Government services assistant powered by Gemini, LangChain, LangGraph, and CrewAI",
+        version="1.0.0",
+        lifespan=lifespan,
+    )
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.origins_list + ["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    app.include_router(router, prefix="/api/v1")
+
+    @app.get("/")
+    async def root():
+        return {"message": "Citizen Service Assistant API", "version": "1.0.0", "docs": "/docs"}
+
+    return app
+
+
+app = create_app()
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

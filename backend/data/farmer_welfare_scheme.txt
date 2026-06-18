@@ -1,0 +1,110 @@
+FARMER WELFARE SCHEME (PM-KISAN SAMMAN NIDHI & RELATED SCHEMES)
+
+Overview:
+The Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) is a central government scheme that provides direct income support to all landholding farmer families in India. Additionally, several complementary farmer welfare schemes exist to provide comprehensive support to the agricultural community.
+
+PM-KISAN SCHEME:
+
+Eligibility:
+- All landholding farmer families (having cultivable land)
+- Small and marginal farmers (primary beneficiaries)
+- Annual income below Rs. 2 lakh from non-agricultural sources
+- The farming family should have the land in their name
+- Age: 18 years and above
+
+Exclusion Criteria:
+- Income taxpayers
+- Retired/Former government employees drawing pension above Rs. 10,000/month
+- Former or sitting Members of Parliament/State Legislature/Ministers
+- Retired employees of Central/State PSUs and Government autonomous bodies
+- Professionals like doctors, engineers, lawyers, chartered accountants
+
+Financial Benefit:
+- Rs. 6,000 per year (Rs. 2,000 every four months)
+- Amount directly credited to bank account via DBT
+
+Documents Required:
+1. Aadhaar Card (mandatory)
+2. Land ownership documents (Khasra/Khatauni/Land Patta)
+3. Bank account details linked to Aadhaar
+4. Mobile number for OTP verification
+5. Passport-size photograph
+
+Application Process:
+Step 1: Visit nearest Common Service Centre (CSC) or Gram Panchayat
+Step 2: Provide Aadhaar and land records
+Step 3: Fill PM-KISAN registration form
+Step 4: Verify mobile number with OTP
+Step 5: Application forwarded to state for verification
+Step 6: Benefits start after state-level approval
+
+Online Self-Registration:
+- Visit pmkisan.gov.in
+- Click "New Farmer Registration"
+- Enter Aadhaar number and captcha
+- Fill personal and land details
+- Submit and receive registration number
+
+PRADHAN MANTRI FASAL BIMA YOJANA (PMFBY - CROP INSURANCE):
+
+Eligibility:
+- All farmers growing notified crops
+- Both loanee and non-loanee farmers
+- Sharecroppers and tenant farmers also eligible
+
+Premium Rates:
+- Kharif crops: 2% of sum insured
+- Rabi crops: 1.5% of sum insured
+- Horticulture/Commercial crops: 5% of sum insured
+
+KISAN CREDIT CARD (KCC):
+
+Eligibility:
+- Farmers with land (own or leased)
+- Age: 18-75 years
+- Share croppers, oral lessees, and tenant farmers
+
+Benefits:
+- Revolving credit facility
+- Interest rate: 7% per annum (2% subvention + 3% prompt repayment incentive)
+- Credit limit based on land holding and crops
+- Also covers post-harvest expenses and allied activities
+
+SOIL HEALTH CARD SCHEME:
+
+Purpose: Provide soil health information to farmers to help improve crop yield
+
+Benefits:
+- Free soil testing
+- Crop-specific fertilizer recommendations
+- SMS alerts for soil health status
+- Helps reduce unnecessary fertilizer use
+
+PM KISAN MAAN DHAN YOJANA (FARMER PENSION):
+
+Eligibility:
+- Small and marginal farmers aged 18-40 years
+- Agricultural land below 2 hectares
+- Not covered under NPS, ESIC, EPFO, etc.
+
+Benefit:
+- Monthly pension of Rs. 3,000 after age 60
+
+Contribution:
+- Age 18: Rs. 55/month
+- Age 29: Rs. 100/month
+- Age 40: Rs. 200/month
+- Equal contribution by Central Government
+
+RASHTRIYA KRISHI VIKAS YOJANA (RKVY):
+
+Purpose: Encourage states to increase public investment in agriculture
+
+Benefits:
+- Infrastructure development in agriculture
+- Technology adoption support
+- Market linkage support
+- Value chain development
+
+Helpline: Kisan Call Center - 1800-180-1551 (Toll Free, 24x7)
+PM-KISAN Helpline: 155261 or 1800-115-526
