@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
 import os
 
@@ -9,9 +9,7 @@ class Settings(BaseSettings):
     environment: str = "development"
     allowed_origins: str = "http://localhost:5173"
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    model_config = SettingsConfigDict(env_file="app.env", extra="ignore", case_sensitive=False)
 
     @property
     def origins_list(self) -> list[str]:

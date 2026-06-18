@@ -21,3 +21,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+backend/app.env
+backend/auth.db
+backend/chroma_db/
+backend/venv/
+backend/__pycache__/

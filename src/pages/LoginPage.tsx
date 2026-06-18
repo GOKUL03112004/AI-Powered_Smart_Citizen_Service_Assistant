@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { LogIn, AlertCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
-import type { AppPage } from '../types';
-
-interface Props {
-  onNavigate: (page: AppPage) => void;
-}
-
-export const LoginPage: React.FC<Props> = ({ onNavigate }) => {
+export const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +20,7 @@ export const LoginPage: React.FC<Props> = ({ onNavigate }) => {
     try {
       const response = await api.post('/auth/login', { username, password });
       login(response.data.access_token, username);
-      onNavigate('home');
+      navigate('/');
     } catch (err: any) {
       if (!err.response) {
         setError('Cannot connect to the server. Is it running?');
@@ -93,7 +89,7 @@ export const LoginPage: React.FC<Props> = ({ onNavigate }) => {
 
         <p className="mt-6 text-center text-sm text-neutral-600">
           Don't have an account?{' '}
-          <button onClick={() => onNavigate('register')} className="text-primary-600 hover:text-primary-700 font-semibold">
+          <button onClick={() => navigate('/register')} className="text-primary-600 hover:text-primary-700 font-semibold">
             Create one
           </button>
         </p>

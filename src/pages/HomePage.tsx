@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AppPage } from '../types';
+import { useNavigate } from 'react-router-dom';
 import {
   MessageSquare,
   CheckCircle2,
@@ -14,13 +14,11 @@ import {
   Zap,
 } from 'lucide-react';
 
-interface HomePageProps {
-  onNavigate: (page: AppPage) => void;
-}
+
 
 const features = [
   {
-    page: 'chat' as AppPage,
+    page: '/chat',
     icon: MessageSquare,
     color: 'bg-blue-50 text-blue-600',
     accent: 'border-blue-200',
@@ -30,7 +28,7 @@ const features = [
     tags: ['RAG', 'LangGraph', 'ReAct'],
   },
   {
-    page: 'eligibility' as AppPage,
+    page: '/eligibility',
     icon: CheckCircle2,
     color: 'bg-emerald-50 text-emerald-600',
     accent: 'border-emerald-200',
@@ -40,7 +38,7 @@ const features = [
     tags: ['Chain-of-Thought', 'ChromaDB'],
   },
   {
-    page: 'simplify' as AppPage,
+    page: '/simplify',
     icon: FileText,
     color: 'bg-amber-50 text-amber-600',
     accent: 'border-amber-200',
@@ -65,7 +63,8 @@ const stats = [
   { value: '24/7', label: 'Availability' },
 ];
 
-export default function HomePage({ onNavigate }: HomePageProps) {
+export default function HomePage() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen">
       {/* Hero */}
@@ -99,12 +98,12 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 animate-fade-in">
-            <button onClick={() => onNavigate('chat')} className="btn-primary text-base px-6 py-3">
+            <button onClick={() => navigate('/chat')} className="btn-primary text-base px-6 py-3">
               <MessageSquare className="w-5 h-5" />
               Start Chatting
               <ArrowRight className="w-4 h-4" />
             </button>
-            <button onClick={() => onNavigate('eligibility')} className="btn-secondary text-base px-6 py-3 bg-white/10 text-white border-white/20 hover:bg-white/20">
+            <button onClick={() => navigate('/eligibility')} className="btn-secondary text-base px-6 py-3 bg-white/10 text-white border-white/20 hover:bg-white/20">
               <CheckCircle2 className="w-5 h-5" />
               Check Eligibility
             </button>
@@ -139,7 +138,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               <div
                 key={page}
                 className={`card card-hover p-6 border-t-4 ${accent} cursor-pointer group`}
-                onClick={() => onNavigate(page)}
+                onClick={() => navigate(page)}
               >
                 <div className={`w-12 h-12 rounded-xl ${color} flex items-center justify-center mb-4`}>
                   <Icon className="w-6 h-6" />
@@ -249,7 +248,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           <p className="text-blue-200 mb-8">
             Access government services information instantly, in plain language you can understand.
           </p>
-          <button onClick={() => onNavigate('chat')} className="btn-primary text-base px-8 py-3">
+          <button onClick={() => navigate('/chat')} className="btn-primary text-base px-8 py-3">
             <MessageSquare className="w-5 h-5" />
             Ask Your First Question
             <ArrowRight className="w-4 h-4" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AppPage } from '../types';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Home,
   MessageSquare,
@@ -12,25 +12,22 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-interface NavbarProps {
-  currentPage: AppPage;
-  onNavigate: (page: AppPage) => void;
-}
-
-const navItems: { page: AppPage; label: string; icon: React.ElementType }[] = [
-  { page: 'home', label: 'Home', icon: Home },
-  { page: 'chat', label: 'Chat Assistant', icon: MessageSquare },
-  { page: 'eligibility', label: 'Eligibility Checker', icon: CheckCircle2 },
-  { page: 'simplify', label: 'Policy Simplifier', icon: FileText },
+const navItems = [
+  { path: '/', label: 'Home', icon: Home },
+  { path: '/chat', label: 'Chat Assistant', icon: MessageSquare },
+  { path: '/eligibility', label: 'Eligibility Checker', icon: CheckCircle2 },
+  { path: '/simplify', label: 'Policy Simplifier', icon: FileText },
 ];
 
-export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
+export default function Navbar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const { isAuthenticated, username, logout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    onNavigate('login');
+    navigate('/login');
   };
 
   return (
@@ -38,8 +35,8 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <button
-            onClick={() => onNavigate('home')}
+          <Link
+            to="/"
             className="flex items-center gap-2.5 group"
           >
             <div className="w-9 h-9 rounded-lg bg-primary-500 flex items-center justify-center flex-shrink-0">
@@ -53,23 +50,23 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
                 Smart Government Services
               </p>
             </div>
-          </button>
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {navItems.map(({ page, label, icon: Icon }) => (
-              <button
-                key={page}
-                onClick={() => onNavigate(page)}
+            {navItems.map(({ path, label, icon: Icon }) => (
+              <Link
+                key={path}
+                to={path}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
-                  currentPage === page
+                  location.pathname === path
                     ? 'bg-primary-600 text-white'
                     : 'text-blue-200 hover:bg-white/10 hover:text-white'
                 }`}
               >
                 <Icon className="w-4 h-4" />
                 {label}
-              </button>
+              </Link>
             ))}
             
             {/* Auth section */}
@@ -86,12 +83,12 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
                   </button>
                 </div>
               ) : (
-                <button
-                  onClick={() => onNavigate('login')}
+                <Link
+                  to="/login"
                   className="px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-500 transition-colors"
                 >
                   Sign In
-                </button>
+                </Link>
               )}
             </div>
           </nav>
@@ -111,19 +108,20 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
       {menuOpen && (
         <div className="md:hidden bg-gov-navy border-t border-white/10 animate-fade-in">
           <div className="px-4 py-3 space-y-1">
-            {navItems.map(({ page, label, icon: Icon }) => (
-              <button
-                key={page}
-                onClick={() => { onNavigate(page); setMenuOpen(false); }}
+            {navItems.map(({ path, label, icon: Icon }) => (
+              <Link
+                key={path}
+                to={path}
+                onClick={() => setMenuOpen(false)}
                 className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
-                  currentPage === page
+                  location.pathname === path
                     ? 'bg-primary-600 text-white'
                     : 'text-blue-200 hover:bg-white/10 hover:text-white'
                 }`}
               >
                 <Icon className="w-4 h-4" />
                 {label}
-              </button>
+              </Link>
             ))}
           </div>
         </div>

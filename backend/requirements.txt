@@ -19,3 +19,7 @@ sentence-transformers
 PyJWT
 passlib
 SQLAlchemy
+langsmith
+structlog
+pytest
+pytest-asyncio

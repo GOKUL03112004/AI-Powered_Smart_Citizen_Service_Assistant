@@ -2,8 +2,12 @@ from __future__ import annotations
 
 import logging
 import sys
+import structlog
 from contextlib import asynccontextmanager
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv("app.env")
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,12 +22,25 @@ from database import engine
 
 models.Base.metadata.create_all(bind=engine)
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-    stream=sys.stdout,
+structlog.configure(
+    processors=[
+        structlog.stdlib.add_log_level,
+        structlog.stdlib.add_logger_name,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.JSONRenderer(),
+    ],
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    wrapper_class=structlog.stdlib.BoundLogger,
+    cache_logger_on_first_use=True,
 )
-logger = logging.getLogger(__name__)
+
+logging.basicConfig(
+    format="%(message)s",
+    stream=sys.stdout,
+    level=logging.INFO,
+)
+
+logger = structlog.get_logger(__name__)
 
 def _seed_knowledge_base() -> None:
     """Load built-in documents into ChromaDB if the collection is empty."""
