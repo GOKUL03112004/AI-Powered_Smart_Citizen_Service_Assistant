@@ -1,14 +1,11 @@
-[build]
-  command = "pip install -r requirements.txt"
-  publish = "."
-
-[build.environment]
-  PYTHON_VERSION = "3.12"
-
-[[services]]
-  name = "citizen-service-api"
-  env = "python"
-  plan = "free"
-  buildCommand = "pip install -r requirements.txt"
-  startCommand = "uvicorn main:app --host 0.0.0.0 --port $PORT"
-  healthCheckPath = "/api/v1/health"
+services:
+  - type: web
+    name: citizen-service-api
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
