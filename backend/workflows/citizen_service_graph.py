@@ -104,8 +104,8 @@ SUMMARY: <one sentence describing what the citizen needs>"""
 
     def _generate_response(self, state: GraphState) -> GraphState:
         """Step 3: Generate response using Chain-of-Thought reasoning."""
-        llm = _get_llm(temperature=0.3)
-        prompt = f"""You are a helpful government services assistant for Indian citizens.
+        llm = _get_llm(temperature=0.1)
+        prompt = f"""You are a precise, helpful government services assistant for Indian citizens.
 
 Citizen Query: {state['query']}
 Detected Intent: {state['intent']}
@@ -117,12 +117,12 @@ Retrieved Knowledge Base Context:
 Using Chain-of-Thought reasoning:
 1. First, understand what the citizen needs
 2. Review the context for relevant information
-3. Structure a clear, helpful response
-4. Use simple language that any citizen can understand
+3. Structure a highly precise and direct response
+4. Avoid unnecessary fluff; be concise and straight to the point
 5. Include actionable steps where applicable
-6. Mention important requirements, fees, and timeframes
+6. Mention important requirements, fees, and timeframes explicitly
 
-Provide a comprehensive and citizen-friendly response:"""
+Provide a precise and citizen-friendly response:"""
 
         messages = [HumanMessage(content=prompt)]
         response = llm.invoke(messages)
@@ -147,17 +147,17 @@ Draft Response to Review:
 Apply self-reflection to improve this response:
 
 REFLECTION CHECKLIST:
-1. Is the information accurate and based on retrieved context?
-2. Is the language simple enough for all citizens (avoid jargon)?
-3. Are the steps clear and actionable?
-4. Is any important information missing?
+1. Is the information perfectly accurate and based only on retrieved context?
+2. Is the response highly precise, concise, and straight to the point?
+3. Are the steps clear and actionable without unnecessary fluff?
+4. Is any critical information missing?
 5. Is the response well-structured with proper formatting?
-6. Does it address all parts of the citizen's query?
+6. Does it address all parts of the citizen's query directly?
 
 Based on your reflection, provide an improved final response that is:
-- More accurate and complete
-- Clearer and more citizen-friendly
-- Better structured
+- Extremely precise and concise
+- Accurate and direct
+- Better structured (use bullet points if helpful)
 - Actionable with specific next steps
 
 IMPROVED FINAL RESPONSE:"""
