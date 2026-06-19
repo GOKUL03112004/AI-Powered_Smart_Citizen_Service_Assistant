@@ -59,10 +59,13 @@ def _seed_knowledge_base() -> None:
         logger.warning("No documents found in %s", data_dir)
 
 
+import asyncio
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting up Citizen Service API...")
-    _seed_knowledge_base()
+    # Run in a background thread so it doesn't block uvicorn from opening the port
+    asyncio.create_task(asyncio.to_thread(_seed_knowledge_base))
     yield
     logger.info("Shutting down Citizen Service API")
 
